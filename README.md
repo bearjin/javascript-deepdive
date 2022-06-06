@@ -7,6 +7,7 @@
 1. 4장 변수
 
 - Question
+  [과제](https://ko.javascript.info/variables#tasks)
 
 2. 5장 표현식과 문
 
