@@ -9,3 +9,9 @@ const b = 100;
  */
 
 a === b; // true
+
+const c = document.querySelector(".a"); // null
+
+Symbol("abc") === Symbol("abc"); // false
+
+typeof null; // object
