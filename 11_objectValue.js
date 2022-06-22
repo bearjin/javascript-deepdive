@@ -17,3 +17,17 @@ var b = { a: [...a.a] };
 
 a.a[0] = 5;
 b.a[0]; // 4
+
+class Person {
+  constructor() {}
+
+  test = () => {};
+}
+
+
+
+const John = new Person(); // 기존 클래스를 새롭게 만들때 new 연산자를 사용
+
+call by value;
+call by reference;
+react props도 객체로 이루어져있다.
