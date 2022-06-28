@@ -42,6 +42,25 @@ log(
   })()
 );
 
+function add(x, y) {
+  if (typeof x !== "number" || typeof y !== "number") {
+    throw new TypeError("인수는 모두 숫자 값이어야 합니다.");
+  }
+
+  return x + y;
+}
+
+function add(x, y) {
+  x = x || 0;
+  y = y || 0;
+
+  return x + y;
+}
+
+function add(x = 0, y = 0) {
+  return x + y;
+}
+
 function countdown(n) {
   for (var i = n; i >= 0; i--) log(i);
 }
