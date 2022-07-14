@@ -28,6 +28,10 @@ function Circle(radius) {
     return 2 * this.radius;
   };
 
+  // if (!new.target) {
+  //   return new Circle(radius);
+  // }
+
   // 3. 암묵적으로 this를 반환한다.
   // 원시값은 그대로 암묵적인 this가 그대로 반환.
   // 명시적으로 객체를 반환하면 암묵적인 this 반환이 무시된다.
@@ -36,7 +40,11 @@ function Circle(radius) {
 // 인스턴스 생성
 const circle3 = new Circle(5);
 const circle4 = new Circle(10);
-log(circle3.getDiameter(), circle4.getDiameter());
+const circle5 = Circle(15);
+
+log(radius, getDiameter());
+
+// log(circle3.getDiameter(), circle4.getDiameter(), circle5.getDiameter());
 
 function add(x, y) {
   return x + y;
@@ -44,3 +52,9 @@ function add(x, y) {
 
 let inst = new add();
 log(inst);
+
+const NonConstructor = function () {
+  return {};
+};
+
+const a = new NonConstructor();

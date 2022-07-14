@@ -17,9 +17,9 @@ const person = {
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   },
-  set fullName(name) {
-    [this.firstName, this.lastName] = name.split(" ");
-  },
+  // set fullName(name) {
+  //   [this.firstName, this.lastName] = name.split(" ");
+  // },
 };
 
 log(person.fullName, (person.fullName = "Hyemi Kim"));
