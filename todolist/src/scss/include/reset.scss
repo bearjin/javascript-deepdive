@@ -1,0 +1,143 @@
+@charset 'utf-8';
+
+header,
+footer,
+section,
+article,
+aside,
+nav,
+hgroup,
+details,
+menu,
+figure,
+figcaption {
+  display: block;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+div,
+li,
+dl,
+dt,
+dd,
+form,
+iframe,
+p,
+a,
+span,
+blockquote,
+i,
+figure,
+fieldset,
+img,
+table,
+th,
+td,
+input,
+textarea,
+select,
+caption,
+button,
+pre,
+small {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "SF Pro Display", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #0a0f18;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+fieldset {
+  border: 0 solid transparent;
+}
+
+img {
+  border: none;
+  line-height: 0;
+  vertical-align: top;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border-spacing: 0;
+}
+
+input,
+textarea,
+select {
+  border: 0;
+  border-radius: 0;
+  font-family: inherit;
+  color: #0a0f18;
+  vertical-align: middle;
+  outline: none;
+}
+
+caption {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+em {
+  font-style: normal;
+}
+
+a {
+  color: #0a0f18;
+  text-decoration: none;
+}
