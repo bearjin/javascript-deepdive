@@ -4,17 +4,26 @@ const childProcess = require("child_process");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const apiMocker = require("connect-api-mocker");
 
 const mode = process.env.NODE_ENV || "development";
 
 module.exports = {
   mode,
   entry: {
-    main: "./src/app.js",
+    main: "./src/app.js"
   },
   output: {
     path: path.resolve("./dist"),
-    filename: "[name].js",
+    filename: "[name].js"
+  },
+  devServer: {
+    overlay: true,
+    stats: "errors-only",
+    before: app => {
+      app.use(apiMocker("/api", "mocks/api"));
+    },
+    hot: true
   },
   module: {
     rules: [
@@ -25,8 +34,8 @@ module.exports = {
             ? MiniCssExtractPlugin.loader // 프로덕션 환경
             : "style-loader", // 개발 환경
           "css-loader",
-          "sass-loader",
-        ],
+          "sass-loader"
+        ]
       },
       {
         test: /\.(png|jpe?g|svg|gif)$/,
@@ -34,8 +43,8 @@ module.exports = {
         options: {
           name: "[name].[ext]?[hash]",
           limit: 20000,
-          outputPath: "images",
-        },
+          outputPath: "images"
+        }
       },
       {
         test: /\.js$/,
@@ -46,14 +55,13 @@ module.exports = {
             [
               "@babel/preset-env",
               {
-                targets: "> 0.25%, not dead",
-                debug: true,
-              },
-            ],
-          ],
-        },
-      },
-    ],
+                targets: "> 0.25%, not dead"
+              }
+            ]
+          ]
+        }
+      }
+    ]
   },
   plugins: [
     new webpack.BannerPlugin({
@@ -61,27 +69,27 @@ module.exports = {
         Build Date: ${new Date().toLocaleString()}
         Commit Version: ${childProcess.execSync("git rev-parse --short HEAD")}
         Author: ${childProcess.execSync("git config user.name")}
-      `,
+      `
     }),
     new webpack.DefinePlugin({}),
 
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       templateParameters: {
-        env: mode === "development" ? "(개발용)" : "",
+        env: mode === "development" ? "(개발용)" : ""
       },
       minify:
         mode === "production"
           ? {
               collapseWhitespace: true, // 빈칸 제거
-              removeComments: true, // 주석 제거
+              removeComments: true // 주석 제거
             }
-          : false,
+          : false
     }),
 
     new CleanWebpackPlugin(),
     ...(mode === "production"
       ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
-      : []),
-  ],
+      : [])
+  ]
 };
