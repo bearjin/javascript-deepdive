@@ -39,7 +39,19 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: "babel-loader", // 바벨 로더를 추가한다
+        loader: "babel-loader",
+        exclude: /node_modules/,
+        options: {
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: "> 0.25%, not dead",
+                debug: true,
+              },
+            ],
+          ],
+        },
       },
     ],
   },
