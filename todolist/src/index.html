@@ -6,5 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document<%= env %></title>
   </head>
-  <body></body>
+  <body>
+    <section class="todoList">
+      <h2 class="todoList__title">TodoList</h2>
+      <ul class="todoList__list">
+        <li class="todoList__item todoList__item--done">
+          <input
+            type="checkbox"
+            name="todo"
+            id="todo1"
+            class="todoList__check"
+          />
+          <label for="todo1" class="todoList__label">todoList 만들기</label>
+          <button type="button" class="todoList__delete">Delete</button>
+        </li>
+        <li class="todoList__item">
+          <input
+            type="text"
+            class="todoList__input"
+            placeholder="텍스트를 입력하세요"
+          />
+          <button type="button" class="todoList__delete">Delete</button>
+        </li>
+      </ul>
+      <button type="button" class="todoList__add">새로 만들기</button>
+    </section>
+  </body>
 </html>
