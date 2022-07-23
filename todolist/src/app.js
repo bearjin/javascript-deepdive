@@ -6,27 +6,41 @@ class TodoContainer {
     this.id = 0;
     this.$todoList = document.querySelector(".todoList__list");
     this.$addBtn = document.querySelector(".todoList__add");
-
     this.$addBtn.addEventListener("click", () => {
       this.createNewItem();
+      this.makeItem();
     });
   }
 
   createNewItem() {
     this.id++;
-    this.todoItems.push({
+    this.todoItems = this.todoItems.concat({
       id: this.id,
       text: "",
       isDone: false,
       isComplete: false
     });
-    this.makeItem();
   }
 
   deleteItem(id) {
     this.todoItems = this.todoItems.filter(item => item.id !== id);
-    console.log(this.todoItems, id);
-    this.makeItem();
+  }
+
+  changeDoneItem(id, text) {
+    this.todoItems.forEach(item => {
+      if (item.id === id) {
+        item.text = text;
+        item.isDone = true;
+      }
+    });
+  }
+
+  changeCompleteItem(id, isComplete) {
+    this.todoItems.forEach(item => {
+      if (item.id === id) {
+        item.isComplete = isComplete;
+      }
+    });
   }
 
   makeItem() {
@@ -49,12 +63,18 @@ class TodoContainer {
     $input.type = "text";
     $input.className = "todoList__input";
     $input.placeholder = "텍스트를 입력하세요";
+    $input.addEventListener("change", event => {
+      const text = event.target.value;
+      this.changeDoneItem(id, text);
+      this.makeItem();
+    });
 
     $button.type = "button";
     $button.className = "todoList__delete";
     $button.textContent = "Delete";
     $button.addEventListener("click", () => {
       this.deleteItem(id);
+      this.makeItem();
     });
 
     $item.appendChild($input);
@@ -77,6 +97,10 @@ class TodoContainer {
     $input.className = "todoList__check";
     $input.id = `todo${id}`;
     $input.checked = isComplete;
+    $input.addEventListener("change", event => {
+      const isComplete = event.target.checked;
+      this.changeCompleteItem(id, isComplete);
+    });
 
     $label.setAttribute("for", `todo${id}`);
     $label.className = "todoList__label";
@@ -87,6 +111,7 @@ class TodoContainer {
     $button.textContent = "Delete";
     $button.addEventListener("click", () => {
       this.deleteItem(id);
+      this.makeItem();
     });
 
     $item.appendChild($input);
