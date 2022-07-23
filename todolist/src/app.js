@@ -8,13 +8,13 @@ class TodoContainer {
     this.$addBtn = document.querySelector(".todoList__add");
     this.$addBtn.addEventListener("click", () => {
       this.createNewItem();
-      this.makeItem();
+      this.makeList();
     });
   }
 
   createNewItem() {
     this.id++;
-    this.todoItems = this.todoItems.concat({
+    this.todoItems.push({
       id: this.id,
       text: "",
       isDone: false,
@@ -43,79 +43,57 @@ class TodoContainer {
     });
   }
 
-  makeItem() {
+  makeList() {
     this.$todoList.innerHTML = "";
     this.todoItems.forEach(({ id, text, isDone, isComplete }) => {
-      this.$todoList.appendChild(
-        isDone ? this.doneItem(id, text, isComplete) : this.defaultItem(id)
-      );
+      this.$todoList.appendChild(this.makeItem(id, text, isDone, isComplete));
     });
   }
 
-  defaultItem(id) {
-    const $item = document.createElement("li");
-    const $input = document.createElement("input");
-    const $button = document.createElement("button");
-
-    $item.className = "todoList__item";
-    $item.dataset.id = id;
-
-    $input.type = "text";
-    $input.className = "todoList__input";
-    $input.placeholder = "텍스트를 입력하세요";
-    $input.addEventListener("change", event => {
-      const text = event.target.value;
-      this.changeDoneItem(id, text);
-      this.makeItem();
-    });
-
-    $button.type = "button";
-    $button.className = "todoList__delete";
-    $button.textContent = "Delete";
-    $button.addEventListener("click", () => {
-      this.deleteItem(id);
-      this.makeItem();
-    });
-
-    $item.appendChild($input);
-    $item.appendChild($button);
-
-    return $item;
-  }
-
-  doneItem(id, text, isComplete) {
+  makeItem(id, text, isDone, isComplete) {
     const $item = document.createElement("li");
     const $input = document.createElement("input");
     const $label = document.createElement("label");
     const $button = document.createElement("button");
 
     $item.className = "todoList__item";
-    $item.classList.add("todoList__item--done");
-    $item.dataset.id = id;
 
-    $input.type = "checkbox";
-    $input.className = "todoList__check";
-    $input.id = `todo${id}`;
-    $input.checked = isComplete;
-    $input.addEventListener("change", event => {
-      const isComplete = event.target.checked;
-      this.changeCompleteItem(id, isComplete);
-    });
+    if (isDone) {
+      $item.classList.add("todoList__item--done");
 
-    $label.setAttribute("for", `todo${id}`);
-    $label.className = "todoList__label";
-    $label.textContent = text;
+      $input.type = "checkbox";
+      $input.className = "todoList__check";
+      $input.id = `todo${id}`;
+      $input.checked = isComplete;
+      $input.addEventListener("change", event => {
+        const isComplete = event.target.checked;
+        this.changeCompleteItem(id, isComplete);
+      });
+
+      $label.setAttribute("for", `todo${id}`);
+      $label.className = "todoList__label";
+      $label.textContent = text;
+    } else {
+      $input.type = "text";
+      $input.className = "todoList__input";
+      $input.placeholder = "텍스트를 입력하세요";
+      $input.addEventListener("change", event => {
+        const text = event.target.value;
+        this.changeDoneItem(id, text);
+        this.makeList();
+      });
+    }
 
     $button.type = "button";
     $button.className = "todoList__delete";
     $button.textContent = "Delete";
     $button.addEventListener("click", () => {
       this.deleteItem(id);
-      this.makeItem();
+      this.makeList();
     });
 
     $item.appendChild($input);
-    $item.appendChild($label);
+    if (isDone) $item.appendChild($label);
     $item.appendChild($button);
 
     return $item;
