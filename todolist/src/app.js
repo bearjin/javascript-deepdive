@@ -3,8 +3,9 @@ import "./scss/app.scss";
 class TodoContainer {
   constructor() {
     this.todoItems = [];
+    this.todoCompleteItems = [];
     this.id = 0;
-    this.$todoList = document.querySelector(".todoList__list");
+    this.$todoListActive = document.querySelector("#todoListActive");
     this.$addBtn = document.querySelector(".todoList__add");
     this.$addBtn.addEventListener("click", () => {
       this.createNewItem();
@@ -38,13 +39,17 @@ class TodoContainer {
   changeCompleteItem(id, isComplete) {
     this.todoItems.forEach(item => {
       if (item.id === id) {
-        item.isComplete = isComplete;
+        this.todoItems.push(item);
       }
     });
   }
 
   makeList() {
     this.$todoList.innerHTML = "";
+    this.todoItems.forEach(({ id, text, isDone, isComplete }) => {
+      this.$todoList.appendChild(this.makeItem(id, text, isDone, isComplete));
+    });
+
     this.todoItems.forEach(({ id, text, isDone, isComplete }) => {
       this.$todoList.appendChild(this.makeItem(id, text, isDone, isComplete));
     });
