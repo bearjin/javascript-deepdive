@@ -39,19 +39,17 @@ class TodoContainer {
   changeCompleteItem(id, isComplete) {
     this.todoItems.forEach(item => {
       if (item.id === id) {
-        this.todoItems.push(item);
+        item.isComplete = isComplete;
       }
     });
   }
 
   makeList() {
-    this.$todoList.innerHTML = "";
+    this.$todoListActive.innerHTML = "";
     this.todoItems.forEach(({ id, text, isDone, isComplete }) => {
-      this.$todoList.appendChild(this.makeItem(id, text, isDone, isComplete));
-    });
-
-    this.todoItems.forEach(({ id, text, isDone, isComplete }) => {
-      this.$todoList.appendChild(this.makeItem(id, text, isDone, isComplete));
+      this.$todoListActive.appendChild(
+        this.makeItem(id, text, isDone, isComplete)
+      );
     });
   }
 
