@@ -1,9 +1,18 @@
 .todoList {
   $this: &;
 
-  width: 300px;
-  padding: 30px;
-  margin: 0 auto;
+  &__wrap {
+    display: flex;
+    justify-content: center;
+    max-width: 1280px;
+    margin-top: 50px;
+  }
+
+  &__area {
+    & + & {
+      margin-left: 100px;
+    }
+  }
 
   &__title {
     font-size: 30px;
@@ -11,6 +20,7 @@
   }
 
   &__list {
+    width: 300px;
     margin-top: 15px;
   }
 
@@ -112,6 +122,11 @@
 
     &--do {
       background-color: #c9f8e4;
+    }
+
+    &--complete {
+      background-color: blue;
+      color: white;
     }
   }
 }
