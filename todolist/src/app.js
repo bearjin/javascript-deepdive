@@ -41,12 +41,30 @@ class TodoContainer {
 
   makeList() {
     const $list = this.area.querySelector(".todoList__list");
+    const $count = this.area.querySelector(".todoList__count");
+    const $resetBtn = this.area.querySelector(".todoList__reset");
 
     $list.innerHTML = "";
-
     this.todoItems.forEach(({ id, text, isDone, isComplete }) => {
       $list.appendChild(this.makeItem(id, text, isDone, isComplete));
     });
+
+    $count.innerText = this.todoItems.length;
+    $count.classList.add("todoList__count--active");
+    $resetBtn.classList.add("todoList__reset--active");
+  }
+
+  resetList() {
+    const $list = this.area.querySelector(".todoList__list");
+    const $count = this.area.querySelector(".todoList__count");
+    const $resetBtn = this.area.querySelector(".todoList__reset");
+
+    $list.innerHTML = "";
+    this.todoItems = [];
+    this.id = 0;
+    $count.innerText = this.todoItems.length;
+    $count.classList.remove("todoList__count--active");
+    $resetBtn.classList.remove("todoList__reset--active");
   }
 
   makeItem(id, text, isDone, isComplete) {
@@ -110,33 +128,53 @@ class TodoArea {
   }
 
   initArea() {
+    const $header = document.createElement("div");
+    const $count = document.createElement("span");
     const $badge = document.createElement("span");
     const $list = document.createElement("ul");
-    const $btn = document.createElement("button");
+    const $createBtn = document.createElement("button");
+    const $resetBtn = document.createElement("button");
+
+    $header.className = "todoList__header";
+
+    $count.className = "todoList__count";
 
     $badge.className = "todoList__badge";
     $badge.classList.add(`todoList__badge--${this.type}`);
     $badge.textContent =
       this.type === "do"
-        ? "😆 할일"
+        ? "😆 Do"
         : this.type === "complete"
-        ? "😎 완료"
+        ? "🥳 Complete"
+        : this.type === "doing"
+        ? "😎 Doing"
         : null;
 
     $list.className = "todoList__list";
 
-    $btn.className = "todoList__add";
-    $btn.textContent = "새로 만들기";
-    $btn.addEventListener("click", () => {
+    $createBtn.className = "todoList__add";
+    $createBtn.textContent = "Create new item";
+    $createBtn.addEventListener("click", () => {
       this.container.createNewItem();
       this.container.makeList();
     });
 
-    this.area.appendChild($badge);
+    $resetBtn.className = "todoList__reset";
+    $resetBtn.textContent = "😇 Delete all items";
+    $resetBtn.addEventListener("click", () => {
+      this.container.resetList();
+    });
+
+    $header.appendChild($badge);
+    $header.appendChild($count);
+    $header.appendChild($resetBtn);
+
+    this.area.appendChild($header);
     this.area.appendChild($list);
-    this.area.appendChild($btn);
+    this.area.appendChild($createBtn);
   }
 }
 
 const doArea = new TodoArea("#todoListDo", "do");
+const doingArea = new TodoArea("#todoListDoing", "doing");
 const completeArea = new TodoArea("#todoListComplete", "complete");
