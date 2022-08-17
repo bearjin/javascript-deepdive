@@ -4,8 +4,10 @@ class TodoContainer {
   constructor(area, type) {
     this.todoItems = [];
     this.id = 0;
-    this.area = area;
+    this.area = document.querySelector(area);
     this.type = type;
+
+    this.initArea();
   }
 
   createNewItem() {
@@ -116,16 +118,6 @@ class TodoContainer {
 
     return $item;
   }
-}
-
-class TodoArea {
-  constructor(area, type) {
-    this.area = document.querySelector(area);
-    this.type = type;
-    this.container = new TodoContainer(this.area, this.type);
-
-    this.initArea();
-  }
 
   initArea() {
     const $header = document.createElement("div");
@@ -155,14 +147,14 @@ class TodoArea {
     $createBtn.className = "todoList__add";
     $createBtn.textContent = "Create new item";
     $createBtn.addEventListener("click", () => {
-      this.container.createNewItem();
-      this.container.makeList();
+      this.createNewItem();
+      this.makeList();
     });
 
     $resetBtn.className = "todoList__reset";
     $resetBtn.textContent = "😇 Delete all items";
     $resetBtn.addEventListener("click", () => {
-      this.container.resetList();
+      this.resetList();
     });
 
     $header.appendChild($badge);
@@ -175,6 +167,6 @@ class TodoArea {
   }
 }
 
-const doArea = new TodoArea("#todoListDo", "do");
-const doingArea = new TodoArea("#todoListDoing", "doing");
-const completeArea = new TodoArea("#todoListComplete", "complete");
+const doArea = new TodoContainer("#todoListDo", "do");
+const doingArea = new TodoContainer("#todoListDoing", "doing");
+const completeArea = new TodoContainer("#todoListComplete", "complete");
