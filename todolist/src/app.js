@@ -1,11 +1,29 @@
 import "./scss/app.scss";
 
+/**
+ * TODO 상락님 피드백 반영해기
+ * 함수 안에서 dom 탐색하던 부분 프로퍼티로 변경하여 사용
+ * dom 마다 여러번 appenChild 했던 것 DocumentFragment 사용하여 변경하기(리플로우, 리페인트가 여러번 발생하는 것을 방지할 수 있다.)
+ * makeItem 함수 새로운 class로 분리
+ */
+
+/**
+ * TODO 추가해 볼 기능들
+ * 아이템 드래그해서 목록 이동 가능하게 하기
+ */
+
 class TodoContainer {
   constructor(area, type) {
     this.todoItems = [];
     this.id = 0;
     this.area = document.querySelector(area);
     this.type = type;
+    this.header;
+    this.badge;
+    this.list;
+    this.count;
+    this.createBtn;
+    this.resetBtn;
 
     this.initArea();
   }
@@ -42,34 +60,30 @@ class TodoContainer {
   }
 
   makeList() {
-    const $list = this.area.querySelector(".todoList__list");
-    const $count = this.area.querySelector(".todoList__count");
-    const $resetBtn = this.area.querySelector(".todoList__reset");
+    const listFragment = new DocumentFragment();
+    this.list.innerHTML = "";
 
-    $list.innerHTML = "";
     this.todoItems.forEach(({ id, text, isDone, isComplete }) => {
-      $list.appendChild(this.makeItem(id, text, isDone, isComplete));
+      listFragment.append(this.makeItem(id, text, isDone, isComplete));
     });
 
-    $count.innerText = this.todoItems.length;
-    $count.classList.add("todoList__count--active");
-    $resetBtn.classList.add("todoList__reset--active");
+    this.list.appendChild(listFragment);
+
+    this.count.innerText = this.todoItems.length;
+    this.count.classList.add("todoList__count--active");
+    this.resetBtn.classList.add("todoList__reset--active");
   }
 
   resetList() {
-    const $list = this.area.querySelector(".todoList__list");
-    const $count = this.area.querySelector(".todoList__count");
-    const $resetBtn = this.area.querySelector(".todoList__reset");
-
-    $list.innerHTML = "";
+    this.list.innerHTML = "";
     this.todoItems = [];
     this.id = 0;
-    $count.innerText = this.todoItems.length;
-    $count.classList.remove("todoList__count--active");
-    $resetBtn.classList.remove("todoList__reset--active");
+    this.count.classList.remove("todoList__count--active");
+    this.resetBtn.classList.remove("todoList__reset--active");
   }
 
   makeItem(id, text, isDone, isComplete) {
+    const itemFragment = new DocumentFragment();
     const $item = document.createElement("li");
     const $input = document.createElement("input");
     const $label = document.createElement("label");
@@ -112,28 +126,32 @@ class TodoContainer {
       this.makeList(this.todoItems);
     });
 
-    $item.appendChild($input);
-    if (isDone) $item.appendChild($label);
-    $item.appendChild($button);
+    itemFragment.append($input);
+    if (isDone) itemFragment.append($label);
+    itemFragment.append($button);
+
+    $item.appendChild(itemFragment);
 
     return $item;
   }
 
   initArea() {
-    const $header = document.createElement("div");
-    const $count = document.createElement("span");
-    const $badge = document.createElement("span");
-    const $list = document.createElement("ul");
-    const $createBtn = document.createElement("button");
-    const $resetBtn = document.createElement("button");
+    const headerFragment = new DocumentFragment();
+    const areaFragment = new DocumentFragment();
+    this.header = document.createElement("div");
+    this.badge = document.createElement("span");
+    this.createBtn = document.createElement("button");
+    this.list = document.createElement("ul");
+    this.count = document.createElement("span");
+    this.resetBtn = document.createElement("button");
 
-    $header.className = "todoList__header";
+    this.header.className = "todoList__header";
 
-    $count.className = "todoList__count";
+    this.count.className = "todoList__count";
 
-    $badge.className = "todoList__badge";
-    $badge.classList.add(`todoList__badge--${this.type}`);
-    $badge.textContent =
+    this.badge.className = "todoList__badge";
+    this.badge.classList.add(`todoList__badge--${this.type}`);
+    this.badge.textContent =
       this.type === "do"
         ? "😆 Do"
         : this.type === "complete"
@@ -142,28 +160,26 @@ class TodoContainer {
         ? "😎 Doing"
         : null;
 
-    $list.className = "todoList__list";
+    this.list.className = "todoList__list";
 
-    $createBtn.className = "todoList__add";
-    $createBtn.textContent = "Create new item";
-    $createBtn.addEventListener("click", () => {
+    this.createBtn.className = "todoList__add";
+    this.createBtn.textContent = "Create new item";
+    this.createBtn.addEventListener("click", () => {
       this.createNewItem();
       this.makeList();
     });
 
-    $resetBtn.className = "todoList__reset";
-    $resetBtn.textContent = "😇 Delete all items";
-    $resetBtn.addEventListener("click", () => {
+    this.resetBtn.className = "todoList__reset";
+    this.resetBtn.textContent = "😇 Delete all items";
+    this.resetBtn.addEventListener("click", () => {
       this.resetList();
     });
 
-    $header.appendChild($badge);
-    $header.appendChild($count);
-    $header.appendChild($resetBtn);
+    headerFragment.append(this.badge, this.count, this.resetBtn);
+    this.header.appendChild(headerFragment);
 
-    this.area.appendChild($header);
-    this.area.appendChild($list);
-    this.area.appendChild($createBtn);
+    areaFragment.append(this.header, this.list, this.createBtn);
+    this.area.appendChild(areaFragment);
   }
 }
 
