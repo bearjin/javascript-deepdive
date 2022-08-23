@@ -76,3 +76,84 @@ console.log(me); // {firstName: Hyemi, lastName: "Kim"}
 
 // getter 함수 실행
 console.log(me.fullName);
+
+class Animal {
+  constructor(age, weight) {
+    this.age = age;
+    this.weight = weight;
+  }
+
+  eat() {
+    return "eat";
+  }
+
+  move() {
+    return "move";
+  }
+}
+
+class Bird extends Animal {
+  constructor(age, weight) {
+    super(age, weight);
+  }
+
+  fly() {
+    return "fly";
+  }
+}
+
+const animal = new Animal(3, 10);
+const bird = new Bird(1, 5);
+console.log(animal.age);
+console.log(animal.weight);
+console.log(bird.age);
+console.log(bird.weight);
+
+class Base {
+  constructor(name) {
+    this.name = name;
+  }
+
+  sayHi() {
+    return `Hi ${this.name}`;
+  }
+}
+
+class Derived extends Base {
+  sayHi() {
+    return `${super.sayHi()}. how are you doing?`;
+  }
+}
+
+const derived = new Derived("Kim");
+console.log(derived.sayHi());
+
+class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+
+  getArea() {
+    return this.width * this.height;
+  }
+
+  toString() {
+    return `width = ${this.width}, height = ${this.height}`;
+  }
+}
+
+class ColorRectangle extends Rectangle {
+  constructor(width, height, color) {
+    super(width, height);
+    this.color = color;
+  }
+
+  toString() {
+    return super.toString() + `, color = ${this.color}`;
+  }
+}
+
+const colorRectangle = new ColorRectangle(3, 5, "blue");
+console.log(colorRectangle.getArea());
+console.log(colorRectangle.toString());
