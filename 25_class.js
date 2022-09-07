@@ -51,9 +51,16 @@ const square = new Square(10, 10);
 console.log(square.area()); // 100
 
 class Person {
-  constructor(firstName, lastName) {
+  #fullName = "";
+
+  constructor(firstName, lastName, fullName) {
     this.firstName = firstName;
     this.lastName = lastName;
+    this.#fullName = fullName;
+  }
+
+  privateTest() {
+    return `${this.#fullName}`;
   }
 
   // fullName은 접근자 함수로 구성된 접근자 프로퍼티다.
@@ -61,26 +68,41 @@ class Person {
     return `${this.firstName} ${this.lastName}`;
   }
 
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
   set fullName(name) {
+    [this.firstName, this.lastName] = name.split(" ");
+  }
+
+  setFullName(name) {
     [this.firstName, this.lastName] = name.split(" ");
   }
 }
 
-const me = new Person("Woongjin", "Kim");
+const me = new Person("Woongjin", "Kim", "Woongjin Kim");
 
 console.log(`${me.firstName} ${me.lastName}`); // Woongjin Kim
 
 // setter 함수 실행
 me.fullName = "Hyemi Kim";
+// me.setFullName("Hyemi Kim");
 console.log(me); // {firstName: Hyemi, lastName: "Kim"}
 
 // getter 함수 실행
 console.log(me.fullName);
+// console.log(me.getFullName());
+
+console.log(me.privateTest());
 
 class Animal {
-  constructor(age, weight) {
+  #height = "";
+
+  constructor(age, weight, height) {
     this.age = age;
     this.weight = weight;
+    this.#height = height;
   }
 
   eat() {
@@ -132,6 +154,16 @@ class Rectangle {
   constructor(width, height) {
     this.width = width;
     this.height = height;
+    this.button = document.querySelector("#test");
+
+    this.button.onclick = this.increase;
+    // console.log(this);
+    // console.log(new.target);
+  }
+
+  increase() {
+    console.log(this);
+    this.button.textContent = this.width++;
   }
 
   getArea() {
@@ -156,4 +188,10 @@ class ColorRectangle extends Rectangle {
 
 const colorRectangle = new ColorRectangle(3, 5, "blue");
 console.log(colorRectangle.getArea());
-console.log(colorRectangle.toString());
+// console.log(colorRectangle.toString());
+
+// const rectangle = new Rectangle(5, 10);
+// console.log(rectangle.getArea());
+
+colorRectangle.width = 40;
+console.log(colorRectangle.getArea());
