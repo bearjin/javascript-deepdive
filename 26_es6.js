@@ -102,3 +102,21 @@ function sum3(x, y = 0) {
 
 console.log(sum3.length);
 console.log(sum3(1, 2, 3, 4, 5));
+
+const [a, b, c] = [1, 2, 3];
+
+console.log(a, b, c);
+
+const person = {
+  name: "Woongjin",
+  age: 33,
+};
+
+const person2 = {
+  ...person,
+};
+
+person.city = "Seoul";
+
+console.log(`person: ${person.city}`);
+console.log(`person2: ${person2.city}`);
