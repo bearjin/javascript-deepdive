@@ -5,9 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      #fruits {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #fruits li {
+        width: 100px;
+        cursor: pointer;
+      }
+
+      #fruits .active {
+        color: red;
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
-    <button id="test" type="button">test</button>
-    <script src="./37_setMap.js"></script>
+    <ul id="fruits">
+      <li id="apple" class="active">Apple</li>
+      <li id="banana">Banana</li>
+      <li id="orange">Orange</li>
+    </ul>
+    <div>선택된 내비게이션 아이템: <em class="msg">apple</em></div>
+    <label for="name" name="name">User name <input type="text" /></label>
+    <em class="message"></em>
+    <script src="./40_event.js"></script>
   </body>
 </html>
