@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debounce</title>
+  </head>
+  <body>
+    <input type="text" />
+    <div class="msg"></div>
+    <script>
+      const $input = document.querySelector("input");
+      const $msg = document.querySelector(".msg");
+
+      const debounce = (callback, delay) => {
+        let timerId;
+
+        return (event) => {
+          if (timerId) clearTimeout(timerId);
+          timerId = setTimeout(callback, delay, event);
+        };
+      };
+
+      $input.oninput = debounce((e) => {
+        $msg.textContent = e.target.value;
+      }, 300);
+    </script>
+  </body>
+</html>
