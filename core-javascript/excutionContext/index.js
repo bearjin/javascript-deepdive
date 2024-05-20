@@ -7,6 +7,16 @@ function a(x) {
 }
 a(1);
 
+function a(x) {
+  var x;
+  var x;
+  x = 1;
+  console.log(x);
+  console.log(x);
+  x = 2;
+  console.log(x);
+}
+
 function a2() {
   console.log(b);
   var b = "bbb";
@@ -32,7 +42,6 @@ var outer = function () {
   var inner = function () {
     console.log(a);
     var a = 3;
-    debugger;
   };
   inner();
   console.log(a);
@@ -40,18 +49,18 @@ var outer = function () {
 outer();
 console.log(a);
 
-// var a;
-// var outer;
-// var inner;
-// a = 1;
-// outer = function() {
-//   inner = function() {
-//     var a;
-//     console.log(a);
-//     a = 3;
-//   };
-//   inner();
-//   console.log(a);
-// };
-// outer();
-// console.log(a);
+var a;
+var outer;
+a = 1;
+outer = function () {
+  var inner;
+  inner = function () {
+    var a;
+    console.log(a);
+    a = 3;
+  };
+  inner();
+  console.log(a);
+};
+outer();
+console.log(a);
