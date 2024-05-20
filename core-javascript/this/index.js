@@ -104,3 +104,17 @@ var report = {
 
 report.add(60, 85, 95);
 console.log(report.sum, report.count, report.average());
+
+function printThis() {
+  console.log(this); // default this => window
+}
+const person1 = {
+  name: "김서원1",
+};
+const person2 = {
+  name: "김서원2",
+};
+const printThis1 = printThis.bind(person1);
+// const printThis2 = printThis1.bind(person2); // X
+printThis1();
+// printThis2(); // => bind는 한번만 사용할 수 있음
