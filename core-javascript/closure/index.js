@@ -98,3 +98,33 @@ outer4 = null; // outer 식별자의 inner 함수 참조를 끊음
   button.addEventListener("click", clickHandler);
   document.body.appendChild(button);
 })();
+
+function 열공스터디(서원, 시윤, 웅진, 유나스터디준비) {
+  return `${서원}, ${시윤}, ${웅진}이 ${유나스터디준비} 를 기다립니다`;
+}
+
+function 열공스터디진행부분함수(서원, 시윤, 웅진) {
+  return function (유나스터디준비) {
+    return 열공스터디(서원, 시윤, 웅진, 유나스터디준비);
+  };
+}
+
+console.log(열공스터디진행부분함수("유나스터디준비")); // 서원, 시윤, 웅진이 유나스터디준비를 기다립니다.
+
+function 무신사이쩜영FE(a) {
+  return function (b) {
+    return function (c) {
+      return `무신사이쩜영FE를 진행하기 위한 ${a}, ${b}, ${c} 가 준비되었습니다`;
+    };
+  };
+}
+
+const step1 = 무신사이쩜영FE("기획"); // 첫번째 인수만 넣음
+console.log(step1); // [funcion] b 을 기다리는 함수가 반환
+
+const step2 = step1("디자인"); // 두번째 인수만 넣음
+console.log(step2); // [funcion] c 을 기다리는 함수가 반환
+
+// const result = step2(api) // 세번째 인수를 넣어서 최종결과 받음
+const result = 무신사이쩜영FE("기획")("디자인")("api"); // 세번째 인수를 넣어서 최종결과 받음
+console.log(result);
